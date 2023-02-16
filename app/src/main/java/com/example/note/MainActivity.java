@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback {
 
     long firstTime;
+    long twiceTime;
     ActivityMainBinding binding;
     EditFragment editFragment;
     AddNoteFragment addNoteFragment;
@@ -97,9 +98,11 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     private void exitApp(int timeInterval) {
         if(System.currentTimeMillis()-firstTime>=timeInterval){
-            ToastUtil.showToast(this,"再按一次退出");
+            ToastUtil.showToast(this,"再按兩次退出");
             firstTime=System.currentTimeMillis();
-        }else {
+        }else if(System.currentTimeMillis()-twiceTime>=timeInterval){
+            twiceTime=System.currentTimeMillis();
+        } else {
             finish();
             System.exit(0);
         }
