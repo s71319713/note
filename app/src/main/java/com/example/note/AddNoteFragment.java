@@ -63,9 +63,9 @@ public class AddNoteFragment extends android.app.Fragment {
 //        return binding.getRoot();
         binding = ViewAddBinding.bind(LayoutInflater.from(context).inflate(R.layout.view_add,container,false));
 
-        if (container != null) {
-            container.removeView(binding.getRoot());
-        }
+//        if (container != null) {
+//            container.removeView(binding.getRoot());
+//        }
         initView();
         return binding.getRoot();
     }
@@ -79,7 +79,7 @@ public class AddNoteFragment extends android.app.Fragment {
         binding.titleBar.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNote();
+
                 backToHome();
             }
         });
@@ -88,6 +88,8 @@ public class AddNoteFragment extends android.app.Fragment {
     private void addNote(){
         //新增
         Note note = new Note();
+        if((binding.edittext.getText().toString()).equals("")){
+            return;}
         note.content = binding.edittext.getText().toString();
         note.lastUpdate = CalendarManerger.getTime();
         addFragmentCallback.addNote(note);
@@ -95,7 +97,7 @@ public class AddNoteFragment extends android.app.Fragment {
     }
 
 
-    private void backToHome(){
+    public void backToHome(){
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
     }
 
@@ -108,6 +110,7 @@ public class AddNoteFragment extends android.app.Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        addNote();
 //        addNote();
     }
 }

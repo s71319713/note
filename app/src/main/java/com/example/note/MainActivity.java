@@ -3,11 +3,15 @@ package com.example.note;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.example.note.Utill.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
 import com.example.note.callback.NoteCallback;
@@ -18,6 +22,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback {
 
+    long firstTime;
     ActivityMainBinding binding;
     EditFragment editFragment;
     AddNoteFragment addNoteFragment;
@@ -28,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
+
+        getSupportActionBar().hide();
         recycleViewAdapter = new RecycleViewAdapter(this,noteArrayList);
         initView();
         
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 addNoteFragment = AddNoteFragment.newInstance();
                 fragmentTransaction.replace(R.id.container,addNoteFragment);
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.commit();
             }
         });
@@ -68,11 +75,35 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
         editFragment=EditFragment.newInstance(note);
         fragmentTransaction.replace(R.id.container,editFragment);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.container);
+        if(currentFragment instanceof  EditFragment){
+            currentFragment = (EditFragment)currentFragment;
+            ((EditFragment) currentFragment).backToHome();
+        }else if(currentFragment instanceof AddNoteFragment){
+            currentFragment = (AddNoteFragment)currentFragment;
+            ((AddNoteFragment) currentFragment).backToHome();
+        }else {
+            exitApp(2000);
+            Log.d("exitApp", "onBackPressed: ");
+        }
+    }
 
+    private void exitApp(int timeInterval) {
+        if(System.currentTimeMillis()-firstTime>=timeInterval){
+            ToastUtil.showToast(this,"再按一次退出");
+            firstTime=System.currentTimeMillis();
+        }else {
+            finish();
+            System.exit(0);
+        }
+    }
 
     @Override
     public void deleteNote(Note note) {

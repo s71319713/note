@@ -56,7 +56,6 @@ public class EditFragment extends android.app.Fragment  {
         if (bundle != null) {
             Note note = (Note) bundle.getSerializable(EDIT);
             this.note = note;
-            Log.d("noteCallback", "onCreate: ednote"+note);
         }
     }
 
@@ -74,9 +73,10 @@ public class EditFragment extends android.app.Fragment  {
 
         binding = ViewEditBinding.bind(LayoutInflater.from(context).inflate(R.layout.view_edit,container,false));
 
-        if (container != null) {
-            container.removeView(binding.getRoot());
-        }
+//        if (container != null) {
+//            container.removeView(binding.getRoot());
+//        }
+        //變透明的罪魁禍首== 可是不移會發瘋啊
         initView();
         return binding.getRoot();
     }
@@ -100,7 +100,7 @@ public class EditFragment extends android.app.Fragment  {
         binding.titleBar.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNote();
+
                 backToHome();
             }
         });
@@ -118,10 +118,13 @@ public class EditFragment extends android.app.Fragment  {
         editFragmentCallback.deleteNote(note);
     }
 
-    private void backToHome(){
+    public void backToHome(){
+        saveNote();
         editFragmentCallback.refresh();
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
     }
+
+
 
 
     @Override
