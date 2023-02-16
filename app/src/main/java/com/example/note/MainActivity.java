@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     private void exitApp(int timeInterval) {
         if(System.currentTimeMillis()-firstTime>=timeInterval){
-            ToastUtil.showToast(this,"再按兩次退出");
+            ToastUtil.showToast(this,"再連按兩次退出");
             firstTime=System.currentTimeMillis();
         }else if(System.currentTimeMillis()-twiceTime>=timeInterval){
             twiceTime=System.currentTimeMillis();
