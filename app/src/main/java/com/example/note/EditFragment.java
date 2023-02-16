@@ -1,15 +1,16 @@
 package com.example.note;
 
-import static com.example.note.Utill.Constant.EDIT;
+import static com.example.note.Util.Constant.EDIT;
 
 import android.content.Context;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
+import com.example.note.Util.TimeUtils;
 import com.example.note.callback.EditFragmentCallback;
 import com.example.note.databinding.ViewEditBinding;
 
@@ -109,6 +110,7 @@ public class EditFragment extends android.app.Fragment  {
     private void saveNote(){
         //儲存
         note.content = binding.edittext.getText().toString();
+        note.lastUpdate = TimeUtils.getCurrentTime();
 //        editFragmentCallback.saveNote();
 
     }
@@ -121,7 +123,14 @@ public class EditFragment extends android.app.Fragment  {
     public void backToHome(){
         saveNote();
         editFragmentCallback.refresh();
+        hideKeyboard();
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.note.Utill;
+package com.example.note.Util;
 
 import android.content.Context;
 import android.widget.Toast;

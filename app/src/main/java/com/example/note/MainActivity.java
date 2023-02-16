@@ -11,12 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.example.note.Utill.ToastUtil;
+import com.example.note.Util.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
 import com.example.note.callback.NoteCallback;
 import com.example.note.databinding.ActivityMainBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -94,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
             Log.d("exitApp", "onBackPressed: ");
         }
     }
+
 
     private void exitApp(int timeInterval) {
         if(System.currentTimeMillis()-firstTime>=timeInterval){

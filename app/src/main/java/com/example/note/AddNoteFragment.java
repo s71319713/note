@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
-import com.example.note.Utill.CalendarManerger;
+import com.example.note.Util.TimeUtils;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.databinding.ViewAddBinding;
-import com.example.note.databinding.ViewEditBinding;
 
 public class AddNoteFragment extends android.app.Fragment {
 
@@ -91,14 +91,22 @@ public class AddNoteFragment extends android.app.Fragment {
         if((binding.edittext.getText().toString()).equals("")){
             return;}
         note.content = binding.edittext.getText().toString();
-        note.lastUpdate = CalendarManerger.getTime();
+        note.lastUpdate = TimeUtils.getCurrentTime();
         addFragmentCallback.addNote(note);
 
     }
 
 
     public void backToHome(){
+        hideKeyboard();
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 
