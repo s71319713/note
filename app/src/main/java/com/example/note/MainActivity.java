@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     long firstTime;
     long twiceTime;
+    //新增addRoom分支
     ActivityMainBinding binding;
     EditFragment editFragment;
     AddNoteFragment addNoteFragment;
