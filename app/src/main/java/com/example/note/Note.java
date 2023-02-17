@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Note implements Serializable {
     String content;
     String lastUpdate;
+    private int id;
 
     public String getContent() {
         return content;
@@ -22,11 +23,18 @@ public class Note implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id){ this.id=id; };
+
     @Override
     public String toString() {
         return "Note{" +
                 "content='" + content + '\'' +
                 ", lastUpdate='" + lastUpdate + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

@@ -1,6 +1,9 @@
 package com.example.note;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Fragment;
@@ -11,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.example.note.Entity.NoteEntity;
+import com.example.note.Util.ParseUtil;
 import com.example.note.Util.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
@@ -23,22 +28,32 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     long firstTime;
     long twiceTime;
-    //新增addRoom分支
     ActivityMainBinding binding;
     EditFragment editFragment;
     AddNoteFragment addNoteFragment;
     RecycleViewAdapter recycleViewAdapter;
     ArrayList<Note> noteArrayList=new ArrayList<>();
+
+    NoteViewModel noteViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
-
         getSupportActionBar().hide();
         recycleViewAdapter = new RecycleViewAdapter(this,noteArrayList);
         initView();
-        
+
+        noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+        noteViewModel.getLiveNoteList().observe(this, new Observer<ArrayList<NoteEntity>>() {
+            @Override
+            public void onChanged(ArrayList<NoteEntity> entityArrayList) {
+                noteArrayList = ParseUtil.toNoteList(entityArrayList);
+                recycleViewAdapter.refreshDataList(noteArrayList);
+            }
+        });
+
     }
 
     private void initView() {
@@ -121,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     @Override
     public void addNote(Note note) {
-        recycleViewAdapter.addNote(note);
+//        recycleViewAdapter.addNote(note);
+        noteViewModel.insert(ParseUtil.toEntity(note));
     }
+
+
 }

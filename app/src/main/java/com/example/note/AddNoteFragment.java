@@ -94,6 +94,7 @@ public class AddNoteFragment extends android.app.Fragment {
         note.lastUpdate = TimeUtils.getCurrentTime();
         addFragmentCallback.addNote(note);
 
+
     }
 
 

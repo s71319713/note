@@ -63,6 +63,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         notifyDataSetChanged();
     }
 
+    public void refreshDataList(ArrayList<Note> noteArrayList) {
+        this.noteArrayList = noteArrayList;
+        notifyDataSetChanged();
+    }
+
 
     public  class NoteViewHolder extends RecyclerView.ViewHolder {
         ItemNoteBinding binding;

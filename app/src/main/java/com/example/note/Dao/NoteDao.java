@@ -1,6 +1,7 @@
 package com.example.note.Dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,6 +12,7 @@ import com.example.note.Entity.NoteEntity;
 import com.example.note.Note;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface NoteDao {
@@ -27,8 +29,11 @@ public interface NoteDao {
     @Query("DELETE FROM note_table")
     void deleteAllNotes();
 
-    @Query("SELECT * FROM  note_table ")
-    LiveData<ArrayList<Note>> getAllNotes();
+    @Query("SELECT * FROM note_table")
+    LiveData<List<NoteEntity>> getAllNotes();
+
+//    @Query("SELECT * FROM note_table ")
+//    MutableLiveData<ArrayList<Note>> getAllNotes();
 
 
 }
