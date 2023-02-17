@@ -42,4 +42,7 @@ dependencies {
 
     implementation "androidx.room:room-runtime:2.4.0"
     annotationProcessor "androidx.room:room-compiler:2.4.0"
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
+
 }

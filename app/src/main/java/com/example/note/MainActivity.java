@@ -23,6 +23,7 @@ import com.example.note.callback.NoteCallback;
 import com.example.note.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback {
 
@@ -46,15 +47,21 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         initView();
 
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
-        noteViewModel.getLiveNoteList().observe(this, new Observer<ArrayList<NoteEntity>>() {
+        noteViewModel.getLiveNoteList().observe(this, new Observer<List<NoteEntity>>() {
             @Override
-            public void onChanged(ArrayList<NoteEntity> entityArrayList) {
-                noteArrayList = ParseUtil.toNoteList(entityArrayList);
-                recycleViewAdapter.refreshDataList(noteArrayList);
+            public void onChanged(List<NoteEntity> noteEntities) {
+                if(noteEntities!=null){
+                    noteArrayList = ParseUtil.toNoteList(noteEntities)   ;
+                    recycleViewAdapter.refreshDataList(noteArrayList);
+                    Log.d("observe", "onChanged: ");
+                }
+
             }
         });
 
     }
+
+
 
     private void initView() {
         initTitleBar();
@@ -138,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
     public void addNote(Note note) {
 //        recycleViewAdapter.addNote(note);
         noteViewModel.insert(ParseUtil.toEntity(note));
+//        ArrayList<Note> noteArrayList =ParseUtil.toNoteList(noteViewModel.QueryAllNote().getValue());
+//        recycleViewAdapter.refreshDataList(noteArrayList);
     }
 
 

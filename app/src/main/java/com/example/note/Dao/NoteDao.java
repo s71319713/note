@@ -1,5 +1,7 @@
 package com.example.note.Dao;
 
+import android.database.Observable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;

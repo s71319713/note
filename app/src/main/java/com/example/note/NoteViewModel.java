@@ -1,25 +1,46 @@
 package com.example.note;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.note.Application.MyApplication;
 import com.example.note.Entity.NoteEntity;
 import com.example.note.Repository.NoteRepository;
+import com.example.note.callback.RepoCallback;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class NoteViewModel extends ViewModel {
+public class NoteViewModel extends ViewModel implements RepoCallback {
     private NoteRepository noteRepository;
-    private MutableLiveData<ArrayList<NoteEntity>>  liveNoteList = new MutableLiveData<>();
+    private MutableLiveData<List<NoteEntity>>  liveNoteList = new MutableLiveData<>();
 
     public NoteViewModel(){
-        liveNoteList= new MutableLiveData<ArrayList<NoteEntity>>();
-//        liveNoteList = (MutableLiveData<ArrayList<NoteEntity>>) noteRepository.QueryAllNote();
+        liveNoteList= new MutableLiveData<List<NoteEntity>>();
+        Log.d("ccccc", "NoteViewModel: "+ MyApplication.getContext());
+        noteRepository = new NoteRepository(this);
+        loadDatas();
+
 
     }
 
-    public LiveData<ArrayList<NoteEntity>> getLiveNoteList(){
+    private void loadDatas() {
+        noteRepository.QueryAllNote();
+//        liveNoteList.setValue( .getValue());
+
+            }
+
+            @Override
+            public void setData(LiveData<List<NoteEntity>> listLiveData){
+                liveNoteList.setValue( listLiveData.getValue());
+            }
+
+
+
+
+    public LiveData<List<NoteEntity>> getLiveNoteList(){
         return liveNoteList;
     }
 
@@ -32,8 +53,8 @@ public class NoteViewModel extends ViewModel {
     public void delete(NoteEntity entity){
         noteRepository.delete(entity);
     }
-    public LiveData<ArrayList<NoteEntity>> QueryAllNote(){
-        return noteRepository.QueryAllNote();
+    public void QueryAllNote(){
+//        return noteRepository.QueryAllNote();
     };
     public void deleteAll(){
         noteRepository.deleteAll();
