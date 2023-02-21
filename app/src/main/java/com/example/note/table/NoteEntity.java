@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.note.Note;
+import com.example.note.Model.Note;
 
 @Entity(tableName ="note_table")
 public class NoteEntity {

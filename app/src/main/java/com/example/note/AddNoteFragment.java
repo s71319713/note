@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.note.Model.Note;
 import com.example.note.Util.TimeUtils;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.databinding.ViewAddBinding;

@@ -1,13 +1,13 @@
-package com.example.note;
+package com.example.note.Model;
 
 import com.example.note.table.NoteEntity;
 
 import java.io.Serializable;
 
 public class Note implements Serializable {
-    int id;
-    String content;
-    String lastUpdate;
+    public int id;
+    public String content;
+    public String lastUpdate;
 
     public Note(){}
 

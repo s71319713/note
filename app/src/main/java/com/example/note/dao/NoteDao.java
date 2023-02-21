@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.note.Note;
 import com.example.note.table.NoteEntity;
 
 import java.util.List;

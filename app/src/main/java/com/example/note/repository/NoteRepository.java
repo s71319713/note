@@ -1,11 +1,8 @@
 package com.example.note.repository;
 
 import android.content.Context;
-import android.content.Entity;
 import android.util.Log;
 
-import com.example.note.Note;
-import com.example.note.callback.EditFragmentCallback;
 import com.example.note.callback.NoteRepositoryCallback;
 import com.example.note.database.NoteDatabase;
 import com.example.note.table.NoteEntity;
@@ -13,7 +10,6 @@ import com.example.note.table.NoteEntity;
 import java.util.List;
 
 import io.reactivex.CompletableObserver;
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
