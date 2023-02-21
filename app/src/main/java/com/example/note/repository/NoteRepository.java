@@ -42,6 +42,7 @@ public class NoteRepository{
                     @Override
                     public void onComplete() {
                         Log.d("DBBBBB", "onComplete: 新增成功");
+                        getAll();
                     }
 
                     @Override
@@ -67,6 +68,7 @@ public class NoteRepository{
                     @Override
                     public void onComplete() {
                         Log.d("DBBBBB", "onComplete: 刪除成功");
+                        getAll();
                     }
 
                     @Override
@@ -91,6 +93,7 @@ public class NoteRepository{
                     @Override
                     public void onComplete() {
                         Log.d("DBBBBB", "onComplete: 更新成功");
+                        getAll();
                     }
 
                     @Override
@@ -115,6 +118,7 @@ public class NoteRepository{
                     @Override
                     public void onSuccess(List<NoteEntity> noteEntities) {
                         noteRepositoryCallback.setData(noteEntities);
+                        Log.d("setdata", "setData: +repo");
                         Log.d("DBBBBB", "onSuccess: 取得所有成功");
                     }
 

@@ -28,6 +28,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         this.noteArrayList = new ArrayList<>();
         if(context instanceof NoteCallback){
             this.noteCallback = (NoteCallback)context;
+            noteCallback.getAll();
         }
     }
 
@@ -70,6 +71,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     public void setData(List<Note> noteList){
         noteArrayList = (ArrayList<Note>) noteList;
+        Log.d("setdata", "setData: +recycelview");
         notifyDataSetChanged();
     }
 

@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         //recycleView改成重新getAll note 並刷新
         //新增一個存資料庫的方法
         repository.delete(note.toEntity());
-        repository.getAll();
 
     }
 
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     public void updateNote(Note note){
         repository.update(note.toEntity());
-        repository.getAll();
+
 
     }
 
@@ -162,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         //recycleView改成重新getAll note 並刷新
         //新增一個存資料庫的方法
         repository.insert(note.toEntity());
-        repository.getAll();
+
 
 
     }
