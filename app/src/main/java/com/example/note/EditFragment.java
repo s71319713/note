@@ -110,6 +110,9 @@ public class EditFragment extends android.app.Fragment  {
 
     private void saveNote(){
         //儲存
+        if(note.content.equals(binding.edittext.getText().toString())){
+            return;
+        }
         note.content = binding.edittext.getText().toString();
         note.lastUpdate = TimeUtils.getCurrentTime();
 //        editFragmentCallback.saveNote();

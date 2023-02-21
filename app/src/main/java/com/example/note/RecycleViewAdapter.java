@@ -22,9 +22,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     ArrayList<Note> noteArrayList;
     NoteCallback noteCallback;
 
-    public RecycleViewAdapter(Context context, ArrayList<Note> noteArrayList){
+    public RecycleViewAdapter(Context context){
         this.context = context;
-        this.noteArrayList = new ArrayList<>();
         if(context instanceof NoteCallback){
             this.noteCallback = (NoteCallback)context;
             noteCallback.getAll();
@@ -50,23 +49,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return noteArrayList.size();
     }
 
-//    public void addNote(Note note){
-//        noteArrayList.add(note);
-//        notifyDataSetChanged();
-//    }
-
-//    public void deleteNote(Note note){
-//        noteArrayList.remove(note);
-//        notifyDataSetChanged();
-//    }
-
-//    public void refresh() {
-//        notifyDataSetChanged();
-//    }
-//    public void refreshFromDB() {
-//        noteArrayList = (ArrayList<Note>) noteCallback.getAll();
-//        notifyDataSetChanged();
-//    }
 
     public void setData(List<Note> noteList){
         noteArrayList = (ArrayList<Note>) noteList;

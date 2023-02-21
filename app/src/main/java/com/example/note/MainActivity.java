@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
         getSupportActionBar().hide();
         repository = new NoteRepository(this);
-        recycleViewAdapter = new RecycleViewAdapter(this,noteArrayList);
+        recycleViewAdapter = new RecycleViewAdapter(this);
         initView();
         
     }
@@ -158,13 +158,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     @Override
     public void addNote(Note note) {
-//        recycleViewAdapter.addNote(note);
-        //recycleView改成重新getAll note 並刷新
-        //新增一個存資料庫的方法
         repository.insert(note.toEntity());
-
-
-
     }
 
 
