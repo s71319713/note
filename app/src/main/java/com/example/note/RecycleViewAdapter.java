@@ -1,6 +1,7 @@
 package com.example.note;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,16 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     ItemNoteBinding binding;
     ArrayList<Note> noteArrayList;
     ReycleviewCallback reycleviewCallback;
+    private boolean longClick=false;
+    private ArrayList<Note> deleteList;
+    private ArrayList<Integer> positionList ;
 
     public RecycleViewAdapter(Context context){
         this.context = context;
         if(context instanceof ReycleviewCallback){
+            noteArrayList = new ArrayList<>();
+            deleteList = new ArrayList<>();
+            positionList = new ArrayList<>();
             this.reycleviewCallback = (ReycleviewCallback)context;
             reycleviewCallback.getAll();
         }
@@ -56,6 +63,20 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         notifyDataSetChanged();
     }
 
+    public ArrayList<Note> getDeleteList(){
+        return  this.deleteList;
+    }
+
+    public ArrayList<Integer> getPositionList(){
+        return this.positionList;
+    }
+
+    public void setIsLongClick(boolean b){
+        deleteList.clear();
+        positionList.clear();
+        this.longClick=b;
+    }
+
 
     public  class NoteViewHolder extends RecyclerView.ViewHolder {
         ItemNoteBinding binding;
@@ -67,12 +88,39 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 @Override
                 public void onClick(View v) {
 
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && reycleviewCallback != null) {
-                        reycleviewCallback.openEditView(noteArrayList.get(getAdapterPosition()));
-                        Log.d("noteCallback", "onClick: "+noteArrayList.get(getAdapterPosition()));
+                    if(longClick){
+                        Note nowClickNote = noteArrayList.get(getAdapterPosition());
+                        if(!deleteList.contains(nowClickNote)){
+                            Log.d("DBB", "longClick: ++"+getAdapterPosition());
+                            binding.getRoot().setBackgroundResource(R.color.gainsboro);
+                            deleteList.add(nowClickNote);
+                            positionList.add(getAdapterPosition());
+
+                        }else {
+                            Log.d("DBB", "longClick: --"+getAdapterPosition());
+                            deleteList.remove(nowClickNote);
+                            positionList.remove(Integer.valueOf(getAdapterPosition()));
+                            binding.getRoot().setBackgroundResource(R.color.white);
+
+                        }
+
+                    }else {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION && reycleviewCallback != null) {
+                            reycleviewCallback.openEditView(noteArrayList.get(getAdapterPosition()));
+                            Log.d("noteCallback", "onClick: " + noteArrayList.get(getAdapterPosition()));
+                        }
                     }
 
+                }
+            });
+
+            binding.getRoot().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    reycleviewCallback.startSelectMode();
+                    longClick=true;
+                    return true;
                 }
             });
 

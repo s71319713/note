@@ -34,6 +34,34 @@
             android:textColor="@color/wheat"
             ></TextView>
 
+        <TextView
+            android:id="@+id/canclebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:text="取消"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/wheat"
+            android:visibility="gone"></TextView>
+
+        <TextView
+            android:id="@+id/deletebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:text="刪除"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/wheat"
+            android:visibility="gone"></TextView>
+
+
+
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.Guideline

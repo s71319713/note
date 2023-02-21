@@ -106,6 +106,49 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
     }
 
     @Override
+    public void startSelectMode() {
+        //1.取消與刪除按鈕出現,先選取第一個長按的,
+        //2.接下的click事件都會add note進入刪除清單,進入刪除清單的item背景變灰
+        //3.按取消或是刪除:取消->取消選擇模式,刪除->repo刪除完成->setData->取消選擇模式
+        binding.titleBar.canclebtn.setVisibility(View.VISIBLE);
+        binding.titleBar.deletebtn.setVisibility(View.VISIBLE);
+        binding.titleBar.deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Note> deleteList = recycleViewAdapter.getDeleteList();
+                for (Note note:
+                     deleteList) {
+                    deleteNote(note);
+                    Log.d("DBB", "deleteNote: ");
+                }
+                closeSelectMode();
+            }
+        });
+        binding.titleBar.canclebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeSelectMode();
+            }
+        });
+
+
+    }
+
+    private void closeSelectMode() {
+
+        binding.titleBar.canclebtn.setVisibility(View.GONE);
+        binding.titleBar.deletebtn.setVisibility(View.GONE);
+        ArrayList<Integer> positionList = recycleViewAdapter.getPositionList();
+        for (Integer position:
+        positionList) {
+            RecycleViewAdapter.NoteViewHolder vm =   (RecycleViewAdapter.NoteViewHolder)binding.recyclerview.findViewHolderForAdapterPosition(position);
+            vm.binding.getRoot().setBackgroundResource(R.color.white);
+        }
+        recycleViewAdapter.setIsLongClick(false);
+//        getAll();
+    }
+
+    @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getFragmentManager();
         Fragment currentFragment = fragmentManager.findFragmentById(R.id.container);
