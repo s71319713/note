@@ -16,8 +16,11 @@ import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
 import com.example.note.callback.NoteCallback;
 import com.example.note.databinding.ActivityMainBinding;
+import com.example.note.repository.NoteRepository;
+import com.example.note.table.NoteEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback {
 
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
     AddNoteFragment addNoteFragment;
     RecycleViewAdapter recycleViewAdapter;
     ArrayList<Note> noteArrayList=new ArrayList<>();
+    NoteRepository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         setContentView(binding.getRoot());
 
         getSupportActionBar().hide();
+        repository = new NoteRepository(this);
         recycleViewAdapter = new RecycleViewAdapter(this,noteArrayList);
         initView();
         
@@ -110,7 +115,12 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     @Override
     public void deleteNote(Note note) {
-        recycleViewAdapter.deleteNote(note);
+//        recycleViewAdapter.deleteNote(note);
+        //recycleView改成重新getAll note 並刷新
+        //新增一個存資料庫的方法
+        repository.delete(note.toEntity());
+        refreshRecycle();
+
     }
 
     @Override
@@ -118,8 +128,35 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         recycleViewAdapter.refresh();
     }
 
+    public void updateNote(Note note){
+        repository.update(note.toEntity());
+        refreshRecycle();
+    }
+
     @Override
     public void addNote(Note note) {
-        recycleViewAdapter.addNote(note);
+//        recycleViewAdapter.addNote(note);
+        //recycleView改成重新getAll note 並刷新
+        //新增一個存資料庫的方法
+        repository.insert(note.toEntity());
+        refreshRecycle();
+
+    }
+
+    public List<Note> getAll(){
+        List<Note> noteArrayList = new ArrayList<Note>();
+        List<NoteEntity> noteEntities = repository.getAll();
+
+        for (NoteEntity entity:
+             noteEntities) {
+            noteArrayList.add(entity.toNote());
+        }
+
+       return noteArrayList;
+    }
+
+
+    public void refreshRecycle(){
+        recycleViewAdapter.refreshFromDB();
     }
 }

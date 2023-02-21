@@ -122,7 +122,7 @@ public class EditFragment extends android.app.Fragment  {
 
     public void backToHome(){
         saveNote();
-        editFragmentCallback.refresh();
+        editFragmentCallback.updateNote(note);
         hideKeyboard();
         getActivity().getFragmentManager().beginTransaction().remove(this).commit();
     }
