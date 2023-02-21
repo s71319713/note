@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
     EditFragment editFragment;
     AddNoteFragment addNoteFragment;
     RecycleViewAdapter recycleViewAdapter;
-    ArrayList<Note> noteArrayList=new ArrayList<>();
     NoteRepository repository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
