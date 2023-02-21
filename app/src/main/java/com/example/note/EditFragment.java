@@ -74,7 +74,16 @@ public class EditFragment extends android.app.Fragment  {
 //        return binding.getRoot();
 
         binding = ViewEditBinding.bind(LayoutInflater.from(context).inflate(R.layout.view_edit,container,false));
-
+        //當你將 attachToRoot 參數設置為 true 時，
+        // 表示要將充氣出來的佈局直接附加到 root 容器中，
+        // 而不是返回一個不依附於 root 容器的 View。
+        // 因此，如果你將 attachToRoot 設置為 true，
+        // 返回的視圖將成為 root 容器的子視圖。如果 attachToRoot 設置為 false，
+        // 則返回的視圖僅表示佈局文件的層次結構，而不會與任何父視圖關聯。
+        //
+        //如果你將 attachToRoot 參數設置為 true，並且你已經有一個視圖容器，
+        // 那麼在添加新的視圖之前，你需要先從視圖容器中移除已有的視圖，否則新的視圖將與已有的視圖疊加。
+        // 因此，當你設置 attachToRoot 參數時，需要注意它的值和容器中是否已經存在視圖的情況
 //        if (container != null) {
 //            container.removeView(binding.getRoot());
 //        }
