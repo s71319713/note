@@ -115,8 +115,6 @@ public class EditFragment extends android.app.Fragment  {
         }
         note.content = binding.edittext.getText().toString();
         note.lastUpdate = TimeUtils.getCurrentTime();
-//        editFragmentCallback.saveNote();
-
     }
 
     private void deleteNote(){
@@ -154,6 +152,8 @@ public class EditFragment extends android.app.Fragment  {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        saveNote();
+        editFragmentCallback.updateNote(note);
     }
 
 }

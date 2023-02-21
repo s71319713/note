@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.note.Model.Note;
-import com.example.note.callback.NoteCallback;
+import com.example.note.callback.ReycleviewCallback;
 import com.example.note.databinding.ItemNoteBinding;
 
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     Context context;
     ItemNoteBinding binding;
     ArrayList<Note> noteArrayList;
-    NoteCallback noteCallback;
+    ReycleviewCallback reycleviewCallback;
 
     public RecycleViewAdapter(Context context){
         this.context = context;
-        if(context instanceof NoteCallback){
-            this.noteCallback = (NoteCallback)context;
-            noteCallback.getAll();
+        if(context instanceof ReycleviewCallback){
+            this.reycleviewCallback = (ReycleviewCallback)context;
+            reycleviewCallback.getAll();
         }
     }
 
@@ -66,13 +66,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (position != RecyclerView.NO_POSITION && callback != null) {
-//                        Note note = noteArrayList.get(position);
-//                        callback.onItemClick(note);
-//                    }
+
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && noteCallback != null) {
-                        noteCallback.openEditView(noteArrayList.get(getAdapterPosition()));
+                    if (position != RecyclerView.NO_POSITION && reycleviewCallback != null) {
+                        reycleviewCallback.openEditView(noteArrayList.get(getAdapterPosition()));
                         Log.d("noteCallback", "onClick: "+noteArrayList.get(getAdapterPosition()));
                     }
 

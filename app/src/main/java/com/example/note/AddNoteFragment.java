@@ -127,6 +127,5 @@ public class AddNoteFragment extends android.app.Fragment {
     public void onDestroy() {
         super.onDestroy();
         addNote();
-//        addNote();
     }
 }

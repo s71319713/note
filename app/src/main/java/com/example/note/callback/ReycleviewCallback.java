@@ -2,7 +2,7 @@ package com.example.note.callback;
 
 import com.example.note.Model.Note;
 
-public interface NoteCallback {
+public interface ReycleviewCallback {
     void openEditView(Note note);
     void getAll();
 }

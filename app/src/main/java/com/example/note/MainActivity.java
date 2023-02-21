@@ -16,7 +16,7 @@ import com.example.note.Model.Note;
 import com.example.note.Util.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
-import com.example.note.callback.NoteCallback;
+import com.example.note.callback.ReycleviewCallback;
 import com.example.note.callback.NoteRepositoryCallback;
 import com.example.note.databinding.ActivityMainBinding;
 import com.example.note.repository.NoteRepository;
@@ -25,7 +25,7 @@ import com.example.note.table.NoteEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback, NoteRepositoryCallback {
+public class MainActivity extends AppCompatActivity implements ReycleviewCallback, EditFragmentCallback, AddFragmentCallback, NoteRepositoryCallback {
 
     long firstTime;
     long twiceTime;
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 addNoteFragment = AddNoteFragment.newInstance();
                 fragmentTransaction.replace(R.id.container,addNoteFragment);
-//                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.commit();
             }
         });
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
         editFragment=EditFragment.newInstance(note);
         fragmentTransaction.replace(R.id.container,editFragment);
-//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
     }
 
@@ -138,17 +136,11 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
 
     @Override
     public void deleteNote(Note note) {
-//        recycleViewAdapter.deleteNote(note);
-        //recycleView改成重新getAll note 並刷新
-        //新增一個存資料庫的方法
         repository.delete(note.toEntity());
 
     }
 
-    @Override
-    public void refresh() {
-//        recycleViewAdapter.refresh();
-    }
+
 
     public void updateNote(Note note){
         repository.update(note.toEntity());
