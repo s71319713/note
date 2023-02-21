@@ -23,6 +23,7 @@ import com.example.note.repository.NoteRepository;
 import com.example.note.table.NoteEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ReycleviewCallback, EditFragmentCallback, AddFragmentCallback, NoteRepositoryCallback {
@@ -116,11 +117,7 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
             @Override
             public void onClick(View view) {
                 ArrayList<Note> deleteList = recycleViewAdapter.getDeleteList();
-                for (Note note:
-                     deleteList) {
-                    deleteNote(note);
-                    Log.d("DBB", "deleteNote: ");
-                }
+                deleteNote(deleteList);
                 closeSelectMode();
             }
         });
@@ -182,6 +179,16 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
         repository.delete(note.toEntity());
 
     }
+
+    public void deleteNote(List<Note> noteList) {
+        List<NoteEntity> entityList=new ArrayList<>();
+        for (Note note:noteList){
+            entityList.add(note.toEntity());
+        }
+        repository.delete(entityList);
+
+    }
+
 
 
 

@@ -22,6 +22,9 @@ public interface NoteDao {
     @Delete
     public Completable deleteNote(NoteEntity entity);
 
+    @Delete
+    public Completable deleteNote(List<NoteEntity> entityList);
+
     @Update
     public Completable updateNote(NoteEntity entity);
 

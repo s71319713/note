@@ -75,6 +75,31 @@ public class NoteRepository{
 
     }
 
+    public void delete(List<NoteEntity> entityList){
+        noteDatabase.getNoteDao().deleteNote(entityList)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("DBBBBB", "onComplete: 刪除多個成功");
+                        getAll();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("DBBBBB", "onComplete: 刪除多個失敗"+e.toString());
+
+                    }
+                });
+        }
+
+
     public void update(NoteEntity note){
 
         noteDatabase.getNoteDao().updateNote(note)
