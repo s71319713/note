@@ -115,6 +115,7 @@ public class EditFragment extends android.app.Fragment  {
         }
         note.content = binding.edittext.getText().toString();
         note.lastUpdate = TimeUtils.getCurrentTime();
+        note.date = TimeUtils.getCurrentDate();
     }
 
     private void deleteNote(){

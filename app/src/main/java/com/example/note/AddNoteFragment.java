@@ -93,6 +93,7 @@ public class AddNoteFragment extends android.app.Fragment {
             return;}
         note.content = binding.edittext.getText().toString();
         note.lastUpdate = TimeUtils.getCurrentTime();
+        note.date = TimeUtils.getCurrentDate();
         note.id=0;
         addFragmentCallback.addNote(note);
 

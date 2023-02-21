@@ -2,6 +2,7 @@ package com.example.note.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
 public class TimeUtils {
@@ -14,5 +15,11 @@ public class TimeUtils {
         String amOrPm = hourOfDay > 12 ? "晚上" : "早上" ;
         time = time.replace("a",amOrPm);
         return  time;
+    }
+
+    public static Date getCurrentDate(){
+        long timestamp = System.currentTimeMillis();
+        Date date = new Date(timestamp);
+        return  date;
     }
 }

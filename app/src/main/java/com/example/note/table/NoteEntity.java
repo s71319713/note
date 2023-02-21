@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey;
 
 import com.example.note.Model.Note;
 
+import java.util.Date;
+
 @Entity(tableName ="note_table")
 public class NoteEntity {
     @PrimaryKey(autoGenerate = true)
@@ -19,14 +21,27 @@ public class NoteEntity {
     @ColumnInfo(name = "updateDate",typeAffinity =ColumnInfo.TEXT)
     private String updateDate;
 
-    public NoteEntity(int id, String content, String updateDate) {
+    @ColumnInfo(name = "date")
+    private Date date;
+
+    public NoteEntity(int id, String content, String updateDate,Date date) {
         this.id = id;
         this.content = content;
         this.updateDate = updateDate;
+        this.date = date;
     }
 
     public int getId() {
         return id;
+    }
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setId(int id) {
@@ -50,6 +65,6 @@ public class NoteEntity {
     }
 
     public Note toNote(){
-        return new Note(id,content,updateDate);
+        return new Note(id,content,updateDate,date);
     }
 }

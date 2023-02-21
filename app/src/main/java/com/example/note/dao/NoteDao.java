@@ -28,7 +28,7 @@ public interface NoteDao {
     @Query("select * from note_table where id=:id")
     public Single<NoteEntity> queryById(int id);
 
-    @Query("select * from note_table")
+    @Query("select * from note_table order by date desc")
     public Single<List<NoteEntity>> queryAll();
 
     @Query("SELECT * FROM note_table WHERE content LIKE '%' || :search || '%'")
