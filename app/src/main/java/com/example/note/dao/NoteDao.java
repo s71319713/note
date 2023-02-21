@@ -11,25 +11,28 @@ import com.example.note.table.NoteEntity;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
 @Dao
 public interface NoteDao {
 
     @Insert
-    public void insertNote(NoteEntity entity);
+    public Completable insertNote(NoteEntity entity);
 
     @Delete
-    public void deleteNote(NoteEntity entity);
+    public Completable deleteNote(NoteEntity entity);
 
     @Update
-    public void UpdateNote(NoteEntity entity);
+    public Completable updateNote(NoteEntity entity);
 
     @Query("select * from note_table where id=:id")
-    public void queryById(int id);
+    public Single<NoteEntity> queryById(int id);
 
     @Query("select * from note_table")
-    public List<NoteEntity> queryAll();
+    public Single<List<NoteEntity>> queryAll();
 
     @Query("SELECT * FROM note_table WHERE content LIKE '%' || :search || '%'")
-    public List<NoteEntity> queryByContent(String search);
+    public Single<List<NoteEntity>> queryByContent(String search);
 
 }

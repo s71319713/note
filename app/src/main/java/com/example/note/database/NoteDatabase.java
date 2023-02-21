@@ -19,7 +19,9 @@ public abstract class NoteDatabase extends RoomDatabase {
         if(noteDatabase==null){
             noteDatabase = Room
                     .databaseBuilder(context.getApplicationContext()
-                            ,NoteDatabase.class,DATABASE_NAME).build();
+                            ,NoteDatabase.class,DATABASE_NAME)
+                    .fallbackToDestructiveMigration()
+                    .build();
             }
         return noteDatabase;
         };

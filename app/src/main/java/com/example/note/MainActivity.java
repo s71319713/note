@@ -2,6 +2,7 @@ package com.example.note;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,6 +16,7 @@ import com.example.note.Util.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;
 import com.example.note.callback.NoteCallback;
+import com.example.note.callback.NoteRepositoryCallback;
 import com.example.note.databinding.ActivityMainBinding;
 import com.example.note.repository.NoteRepository;
 import com.example.note.table.NoteEntity;
@@ -22,7 +24,7 @@ import com.example.note.table.NoteEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback {
+public class MainActivity extends AppCompatActivity implements NoteCallback, EditFragmentCallback, AddFragmentCallback, NoteRepositoryCallback {
 
     long firstTime;
     long twiceTime;
@@ -49,7 +51,22 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         initTitleBar();
         initRecyclerView();
         addOnClickListenLer();
+        initSwpieRefreshLayout();
 
+    }
+
+    private void initSwpieRefreshLayout() {
+        binding.swipebtn.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light);
+        binding.swipebtn.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getAll();
+                binding.swipebtn.setRefreshing(false);
+            }
+        });
     }
 
     private void addOnClickListenLer() {
@@ -82,6 +99,11 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         fragmentTransaction.replace(R.id.container,editFragment);
 //        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void getAll() {
+        repository.getAll();
     }
 
     @Override
@@ -119,18 +141,19 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         //recycleView改成重新getAll note 並刷新
         //新增一個存資料庫的方法
         repository.delete(note.toEntity());
-        refreshRecycle();
+        repository.getAll();
 
     }
 
     @Override
     public void refresh() {
-        recycleViewAdapter.refresh();
+//        recycleViewAdapter.refresh();
     }
 
     public void updateNote(Note note){
         repository.update(note.toEntity());
-        refreshRecycle();
+        repository.getAll();
+
     }
 
     @Override
@@ -139,24 +162,20 @@ public class MainActivity extends AppCompatActivity implements NoteCallback, Edi
         //recycleView改成重新getAll note 並刷新
         //新增一個存資料庫的方法
         repository.insert(note.toEntity());
-        refreshRecycle();
+        repository.getAll();
+
 
     }
 
-    public List<Note> getAll(){
+
+    @Override
+    public void setData(List<NoteEntity> entityList) {
         List<Note> noteArrayList = new ArrayList<Note>();
-        List<NoteEntity> noteEntities = repository.getAll();
 
         for (NoteEntity entity:
-             noteEntities) {
+                entityList) {
             noteArrayList.add(entity.toNote());
         }
-
-       return noteArrayList;
-    }
-
-
-    public void refreshRecycle(){
-        recycleViewAdapter.refreshFromDB();
+        recycleViewAdapter.setData(noteArrayList);
     }
 }

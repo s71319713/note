@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface NoteCallback {
     void openEditView(Note note);
-    List<Note> getAll();
+    void getAll();
 }

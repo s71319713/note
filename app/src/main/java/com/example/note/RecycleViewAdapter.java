@@ -15,6 +15,7 @@ import com.example.note.callback.NoteCallback;
 import com.example.note.databinding.ItemNoteBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.NoteViewHolder> {
     Context context;
@@ -24,7 +25,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     public RecycleViewAdapter(Context context, ArrayList<Note> noteArrayList){
         this.context = context;
-        this.noteArrayList = (ArrayList<Note>) noteCallback.getAll();
+        this.noteArrayList = new ArrayList<>();
         if(context instanceof NoteCallback){
             this.noteCallback = (NoteCallback)context;
         }
@@ -59,11 +60,16 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 //        notifyDataSetChanged();
 //    }
 
-    public void refresh() {
-        notifyDataSetChanged();
-    }
-    public void refreshFromDB() {
-        noteArrayList = (ArrayList<Note>) noteCallback.getAll();
+//    public void refresh() {
+//        notifyDataSetChanged();
+//    }
+//    public void refreshFromDB() {
+//        noteArrayList = (ArrayList<Note>) noteCallback.getAll();
+//        notifyDataSetChanged();
+//    }
+
+    public void setData(List<Note> noteList){
+        noteArrayList = (ArrayList<Note>) noteList;
         notifyDataSetChanged();
     }
 
