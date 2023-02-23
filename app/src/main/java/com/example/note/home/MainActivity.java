@@ -1,4 +1,4 @@
-package com.example.note;
+package com.example.note.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.example.note.AddNoteFragment;
+import com.example.note.EditFragment;
 import com.example.note.Model.Note;
+import com.example.note.R;
+import com.example.note.RecycleViewAdapter;
 import com.example.note.Util.ToastUtil;
 import com.example.note.callback.AddFragmentCallback;
 import com.example.note.callback.EditFragmentCallback;

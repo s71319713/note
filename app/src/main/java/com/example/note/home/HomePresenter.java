@@ -29,6 +29,7 @@ public class HomePresenter
 
     }
 
+    @Override
     public RecycleViewAdapter getRecycleViewAdapter() {
         return recycleViewAdapter;
     }
@@ -38,6 +39,7 @@ public class HomePresenter
         view.openEditView(note);
     }
 
+    @Override
     public void getAll(){
         repository.getAll();
     }
@@ -54,12 +56,16 @@ public class HomePresenter
         repository.delete(note.toEntity());
     }
 
-    public void deldteNote(List<Note> noteList){
+
+
+    @Override
+    public void deldteNote(ArrayList<Note> deleteList) {
         List<NoteEntity> entityList=new ArrayList<>();
-        for (Note note:noteList){
+        for (Note note:deleteList){
             entityList.add(note.toEntity());
         }
         repository.delete(entityList);
+
     }
 
     public void updateNote(Note note){
@@ -81,11 +87,14 @@ public class HomePresenter
         }
         recycleViewAdapter.setData(noteArrayList);
     }
-
+@Override
     public void setAddFragmentCallBack() {
         view.getAddNoteFragment().setAddFragmentCallback(this);
     }
 
+
+
+    @Override
     public void setEditFragmentCallBack() {
         view.getEditFagment().setEditFragmentCallback(this);
     }

@@ -23,7 +23,7 @@ import com.example.note.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class HomeActiviy extends BaseActivity<HomePresenter> implements HomeContract.View , View.OnClickListener {
+public class HomeActiviy extends BaseActivity<HomeContract.Presenter> implements HomeContract.View , View.OnClickListener {
 
     long firstTime;
     long twiceTime;
