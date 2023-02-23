@@ -79,7 +79,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
 
     public  class NoteViewHolder extends RecyclerView.ViewHolder {
-        ItemNoteBinding binding;
+        public ItemNoteBinding binding;
         public NoteViewHolder(ItemNoteBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

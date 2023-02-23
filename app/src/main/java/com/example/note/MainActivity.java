@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
         //3.按取消或是刪除:取消->取消選擇模式,刪除->repo刪除完成->setData->取消選擇模式
         binding.titleBar.canclebtn.setVisibility(View.VISIBLE);
         binding.titleBar.deletebtn.setVisibility(View.VISIBLE);
+
         binding.titleBar.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
