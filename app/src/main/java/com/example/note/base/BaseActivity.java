@@ -17,7 +17,7 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter>
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(mPresenter!=null){
+        if(mPresenter==null){
             mPresenter = createPresenter();
         }
         attachPresenter(mPresenter);

@@ -3,6 +3,7 @@ package com.example.note.repository;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.note.application.App;
 import com.example.note.callback.NoteRepositoryCallback;
 import com.example.note.database.NoteDatabase;
 import com.example.note.table.NoteEntity;
@@ -18,10 +19,10 @@ import io.reactivex.schedulers.Schedulers;
 public class NoteRepository{
     private NoteDatabase noteDatabase;
     private NoteRepositoryCallback noteRepositoryCallback;
-    public NoteRepository(Context context){
-        noteDatabase = NoteDatabase.getDBInstance(context);
-        if(context instanceof NoteRepositoryCallback){
-            noteRepositoryCallback = (NoteRepositoryCallback)context;
+    public NoteRepository(NoteRepositoryCallback noteRepositoryCallback){
+        noteDatabase = NoteDatabase.getDBInstance(App.getContext());
+        if(noteRepositoryCallback instanceof NoteRepositoryCallback){
+            this.noteRepositoryCallback = noteRepositoryCallback;
         }
     }
 

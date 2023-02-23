@@ -3,6 +3,7 @@ package com.example.note;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,15 +37,17 @@ public class AddNoteFragment extends android.app.Fragment {
         return fragment;
     }
 
-
+    public void setAddFragmentCallback(AddFragmentCallback addFragmentCallback) {
+        this.addFragmentCallback = addFragmentCallback;
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        if(context instanceof AddFragmentCallback){
-            addFragmentCallback = (AddFragmentCallback)context;
-        }
+//        if(context instanceof AddFragmentCallback){
+//            addFragmentCallback = (AddFragmentCallback)context;
+//        }
     }
 
     @Override

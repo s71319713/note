@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.note.Model.Note;
+import com.example.note.application.App;
 import com.example.note.callback.ReycleviewCallback;
 import com.example.note.databinding.ItemNoteBinding;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.NoteViewHolder> {
-    Context context;
+//    Context context;
     ItemNoteBinding binding;
     ArrayList<Note> noteArrayList;
     ReycleviewCallback reycleviewCallback;
@@ -26,13 +27,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private ArrayList<Note> deleteList;
     private ArrayList<Integer> positionList ;
 
-    public RecycleViewAdapter(Context context){
-        this.context = context;
-        if(context instanceof ReycleviewCallback){
+    public RecycleViewAdapter(ReycleviewCallback reycleviewCallback){
+//        this.context = context;
+        if(reycleviewCallback instanceof ReycleviewCallback){
             noteArrayList = new ArrayList<>();
             deleteList = new ArrayList<>();
             positionList = new ArrayList<>();
-            this.reycleviewCallback = (ReycleviewCallback)context;
+            this.reycleviewCallback = reycleviewCallback;
             reycleviewCallback.getAll();
         }
     }
@@ -42,7 +43,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //把layout infalte視圖化
-        binding = ItemNoteBinding.bind(LayoutInflater.from(context).inflate(R.layout.item_note,parent,false));
+        binding = ItemNoteBinding.bind(LayoutInflater.from(App.getContext()).inflate(R.layout.item_note,parent,false));
         return new NoteViewHolder(binding);
     }
 

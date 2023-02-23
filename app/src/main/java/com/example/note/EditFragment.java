@@ -5,6 +5,7 @@ import static com.example.note.Util.Constant.EDIT;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,9 @@ public class EditFragment extends android.app.Fragment  {
         super.onAttach(context);
         //拿callback&context
         this.context = context;
-        if(context instanceof EditFragmentCallback){
-            editFragmentCallback = (EditFragmentCallback)context;
-        }
+//        if(context instanceof EditFragmentCallback){
+//            editFragmentCallback = (EditFragmentCallback)context;
+//        }
     }
 
     @Override
@@ -99,6 +100,10 @@ public class EditFragment extends android.app.Fragment  {
         initOnClickListener();
     }
 
+    public void setEditFragmentCallback(EditFragmentCallback editFragmentCallback) {
+        this.editFragmentCallback = editFragmentCallback;
+    }
+
     private void initOnClickListener() {
         binding.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +116,7 @@ public class EditFragment extends android.app.Fragment  {
         binding.titleBar.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("MVP", "backBtn onClick: ");
 
                 backToHome();
             }

@@ -1,5 +1,7 @@
 package com.example.note.home;
 
+import android.util.Log;
+
 import com.example.note.Model.Note;
 import com.example.note.RecycleViewAdapter;
 import com.example.note.application.App;
@@ -22,8 +24,9 @@ public class HomePresenter
     RecycleViewAdapter recycleViewAdapter;
 
     public HomePresenter(){
-        repository = new NoteRepository(App.getContext());
-        recycleViewAdapter = new RecycleViewAdapter(App.getContext());
+        repository = new NoteRepository(this);
+        recycleViewAdapter = new RecycleViewAdapter(this);
+
     }
 
     public RecycleViewAdapter getRecycleViewAdapter() {
@@ -44,20 +47,6 @@ public class HomePresenter
         view.startSelectMode();
 
     }
-
-    public void closeSelectMode(){
-        view.closeSelectMode();
-    }
-
-    public void deleteNote(List<Note> noteList) {
-        List<NoteEntity> entityList=new ArrayList<>();
-        for (Note note:noteList){
-            entityList.add(note.toEntity());
-        }
-        repository.delete(entityList);
-
-    }
-
 
 
     @Override
@@ -91,5 +80,13 @@ public class HomePresenter
             noteArrayList.add(entity.toNote());
         }
         recycleViewAdapter.setData(noteArrayList);
+    }
+
+    public void setAddFragmentCallBack() {
+        view.getAddNoteFragment().setAddFragmentCallback(this);
+    }
+
+    public void setEditFragmentCallBack() {
+        view.getEditFagment().setEditFragmentCallback(this);
     }
 }

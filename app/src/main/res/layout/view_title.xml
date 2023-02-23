@@ -48,7 +48,7 @@
             android:visibility="gone"></TextView>
 
         <TextView
-            android:id="@+id/deletebtn"
+            android:id="@+id/deleteMultbtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"

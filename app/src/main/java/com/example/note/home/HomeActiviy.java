@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.note.AddNoteFragment;
 import com.example.note.EditFragment;
@@ -36,7 +37,13 @@ public class HomeActiviy extends BaseActivity<HomePresenter> implements HomeCont
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this));
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+
         initView();
+    }
+
+    @Override
+    public HomePresenter createPresenter() {
+        return new HomePresenter();
     }
 
     private void initView() {
@@ -64,23 +71,37 @@ public class HomeActiviy extends BaseActivity<HomePresenter> implements HomeCont
 
     private void initOnClickListen() {
         binding.addbtn.setOnClickListener(this);
+        binding.titleBar.deleteMultbtn.setOnClickListener(this);
+        binding.titleBar.canclebtn.setOnClickListener(this);
+        binding.swipebtn.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getAll();
+                binding.swipebtn.setRefreshing(false);
+            }
+        });
+    }
+
+
+    @Override
+    public AddNoteFragment getAddNoteFragment() {
+        return addNoteFragment;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public EditFragment getEditFagment() {
+        return editFragment;
     }
 
-
-    @Override
-    public HomePresenter createPresenter() {
-        return new HomePresenter();
+    public EditFragment getEditFragment() {
+        return editFragment;
     }
 
     @Override
     public void openEditView(Note note) {
         FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
         editFragment= EditFragment.newInstance(note);
+        mPresenter.setEditFragmentCallBack();
         fragmentTransaction.replace(R.id.container,editFragment);
         fragmentTransaction.commit();
     }
@@ -88,13 +109,13 @@ public class HomeActiviy extends BaseActivity<HomePresenter> implements HomeCont
     @Override
     public void startSelectMode() {
         binding.titleBar.canclebtn.setVisibility(View.VISIBLE);
-        binding.titleBar.deletebtn.setVisibility(View.VISIBLE);
+        binding.titleBar.deleteMultbtn.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void closeSelectMode() {
         binding.titleBar.canclebtn.setVisibility(View.GONE);
-        binding.titleBar.deletebtn.setVisibility(View.GONE);
+        binding.titleBar.deleteMultbtn.setVisibility(View.GONE);
         ArrayList<Integer> positionList = mPresenter.getRecycleViewAdapter().getPositionList();
         for (Integer position:
                 positionList) {
@@ -138,14 +159,11 @@ public class HomeActiviy extends BaseActivity<HomePresenter> implements HomeCont
             case R.id.addbtn:
                 FragmentTransaction fragmentTransaction =getFragmentManager().beginTransaction();
                 addNoteFragment = AddNoteFragment.newInstance();
+                mPresenter.setAddFragmentCallBack();
                 fragmentTransaction.replace(R.id.container,addNoteFragment);
                 fragmentTransaction.commit();
                 break;
-            case R.id.swipebtn:
-                mPresenter.getAll();
-                binding.swipebtn.setRefreshing(false);
-                break;
-            case R.id.deletebtn:
+            case R.id.deleteMultbtn:
                 mPresenter.deldteNote(mPresenter.getRecycleViewAdapter().getDeleteList());
                 closeSelectMode();
                 break;

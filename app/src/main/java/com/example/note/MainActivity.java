@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
         //2.接下的click事件都會add note進入刪除清單,進入刪除清單的item背景變灰
         //3.按取消或是刪除:取消->取消選擇模式,刪除->repo刪除完成->setData->取消選擇模式
         binding.titleBar.canclebtn.setVisibility(View.VISIBLE);
-        binding.titleBar.deletebtn.setVisibility(View.VISIBLE);
+        binding.titleBar.deleteMultbtn.setVisibility(View.VISIBLE);
 
-        binding.titleBar.deletebtn.setOnClickListener(new View.OnClickListener() {
+        binding.titleBar.deleteMultbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ArrayList<Note> deleteList = recycleViewAdapter.getDeleteList();
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements ReycleviewCallbac
     private void closeSelectMode() {
 
         binding.titleBar.canclebtn.setVisibility(View.GONE);
-        binding.titleBar.deletebtn.setVisibility(View.GONE);
+        binding.titleBar.deleteMultbtn.setVisibility(View.GONE);
         ArrayList<Integer> positionList = recycleViewAdapter.getPositionList();
         for (Integer position:
         positionList) {
